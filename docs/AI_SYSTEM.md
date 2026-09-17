@@ -2,31 +2,35 @@
 
 ## Current state
 
-There is no model integration, prompt, schema library, provider SDK, or AI endpoint.
-Provider choice, model choice, processing limits, and budgets are undecided.
+No model, provider, prompt, AI endpoint, schema library, or live legal research is
+integrated. Explanations and comparisons are authored synthetic fixture content.
+Typed questions match explicit normalized aliases; no semantic inference occurs.
+Unknown questions produce a clear unsupported state and supported alternatives.
 
-## Planned contract
+## Current evidence gate
 
-- AI explains meaning; deterministic software should establish or validate facts
-  where practical. Model assertions alone do not establish facts.
-- Responses must use typed structured contracts with runtime validation at the
-  external boundary. TypeScript types alone cannot validate a provider response.
-- Document-derived claims must reference real source evidence. Deterministic
-  checks must verify reference existence and quoted text or spans against the
-  document representation. These checks do not prove an interpretation is correct.
-- Uncertainty and missing evidence must be explicit in both the response contract
-  and its eventual presentation.
-- Treat document text and model output as untrusted data. Embedded instructions
-  must not grant tools, change system policy, or bypass validation.
+Document ID plus block ID identifies evidence. Presentation validates document
+membership, block uniqueness, version consistency, offset bounds and exact quote
+agreement. Every supported statement requires evidence. Any failed reference
+withholds its statement; the UI never repairs it. Partial information has an
+explicit qualification and is not converted into certainty.
 
-## Planned failure and evaluation behavior
+Fixture integrity and pure-model tests check these mechanical rules. They do not
+establish legal correctness, verify interpretation quality, or replace validation
+of unknown external data.
 
-Reject malformed contracts, invalid references, and unsupported claims rather
-than displaying them as validated output. Define safe user-facing failures for
-provider timeouts, refusals, and limits; do not log document content to debug them.
+## Required future boundary, not implemented
 
-When AI is implemented, use small synthetic fixtures for contract and evidence
-checks, plus separate semantic evaluations for interpretation quality. Mock
-provider responses in routine tests. Any live evaluation must be explicit and
-separate from the default CI gate. No schemas or evaluation tooling are installed
-by this harness. See [Testing](TESTING.md) and [Security](SECURITY.md).
+AI explains meaning; deterministic code establishes or validates facts where
+practical. Future external responses need runtime-validated structured contracts,
+then evidence checks, before they populate the presentation model. TypeScript
+alone cannot validate external output.
+
+Treat document instructions and model output as untrusted. They must not grant
+tools or change application policy. Define safe failures for malformed output,
+unsupported claims, missing evidence, timeouts, refusals and limits. Never log
+sensitive document content for debugging.
+
+Future tests should mock providers and separately evaluate interpretation quality.
+Live evaluations must be explicit and outside the default CI gate. Provider,
+model, limits, budget and external-processing policy remain undecided.

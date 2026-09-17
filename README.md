@@ -1,47 +1,58 @@
 # Legal Document Navigator
 
-**Current state:** an unchanged Next.js application scaffold with a minimal
-engineering harness. Document processing and AI functionality are not implemented.
-The intended product and its unresolved scope are described in [Product](docs/PRODUCT.md).
+A synthetic legal-document workspace for understanding terms, comparing prepared
+versions, and finding source passages. This phase uses authored fixtures only.
+There is no real document intake, live AI, legal research, account, or storage.
+The explanations have not been legally verified.
 
-## Local setup
+## Run locally
 
-Use Node **24.18.0** from `.nvmrc` (with `nvm`, run `nvm install` and `nvm use`).
-Use npm with the committed lockfile to install the same dependency versions.
-No API keys or application services are required.
+Use Node **24.18.0** from `.nvmrc`, npm, and the committed lockfile.
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open [localhost:3000](http://localhost:3000). The scaffold page is
-`src/app/page.tsx`; shared layout and styles are beside it.
+Open http://localhost:3000 and choose **Open sample agreement**. The workspace
+starts with Understand; Compare adds a prepared revision; Ask & Navigate offers
+six prepared questions and literal source search. Questions and selections stay
+in page memory and reset on reload. No API keys or application services are needed.
 
-## Quality checks
+## Verification
 
 ```sh
 npm run check
 ```
 
-This runs `check:repo`, `lint`, `typecheck`, and `build` in order. Type checking
-generates Next.js route types first. To inspect the production build locally,
-run `npm run start` after a successful build.
+The gate runs repository hygiene, Vitest, lint, generated route types plus strict
+TypeScript, and a production build. Individual commands are `check:repo`, `test`,
+`lint`, `typecheck`, and `build`. After building, use `npm run start` for browser
+verification. The existing `next/font` build step may need network access; fonts
+are served locally to browsers. This is not an offline build guarantee.
 
-CI runs `npm ci` and the same four checks on pushes to `main` or manual dispatch.
-It uses no application services, secrets, AI calls, deployments, or browser tests.
-Package installation and the scaffold's Google-font build step require network
-access; this is not a fully offline build.
+Vitest is the only added test dependency. Pure tests cover fixture integrity,
+evidence validation, comparison membership, prepared-question matching, and
+literal search. No browser-test packages are installed. See
+[Testing](docs/TESTING.md) for manual checks and their limits.
 
-## Documentation
+Development includes an explicit scenario selector for loading, partial, failure,
+and invalid-evidence presentations. It is excluded from production rendering and
+has no URL or storage override. The normal sample has no fake processing delays.
 
-- [Agent map and working rules](AGENTS.md)
-- [Product scope](docs/PRODUCT.md) and [architecture](docs/ARCHITECTURE.md)
-- [Design requirements](docs/DESIGN.md) and [planned AI system](docs/AI_SYSTEM.md)
-- [Security and repository hygiene](docs/SECURITY.md)
-- [Verification and future testing](docs/TESTING.md)
-- [Engineering decisions](docs/DECISIONS.md)
+## Architecture and documentation
 
-Work stays on `main`. Review the complete diff and run the checks before an
-explicitly requested commit. Test frameworks and feature dependencies are deferred
-until meaningful implementations need them.
+Routes live in `src/app/`; the feature lives in `src/features/document-workspace/`.
+Canonical evidence identity is document ID plus block ID. Quote, offsets, and
+version are validated before a claim is shown; invalid references are not repaired.
+
+- [Product scope](docs/PRODUCT.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Design and accessibility](docs/DESIGN.md)
+- [Future AI boundary](docs/AI_SYSTEM.md)
+- [Security and privacy limits](docs/SECURITY.md)
+- [Testing](docs/TESTING.md)
+- [Decisions](docs/DECISIONS.md)
+
+Work stays on `main`. Commit and push only when explicitly requested. Private
+notes and real documents must not enter fixtures, public files, or repository text.

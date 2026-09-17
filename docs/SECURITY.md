@@ -2,7 +2,18 @@
 
 ## Current protections and limits
 
-The app is a scaffold with no document intake, application secrets, or storage.
+The app uses synthetic authored fixtures, with no document intake, application
+secrets, external processing, or storage. Questions, searches and selections stay
+in React memory. They are not placed in URLs or sent by the application to a
+server, analytics, or logging service. Reload resets the workspace. Browser or
+operating-system behavior is outside this application-level statement.
+
+Only synthetic documents are bundled publicly. Source text is rendered as text,
+not injected HTML. Document/block identity, version, quotes and offsets are
+validated before supported claims render; failures are not silently repaired.
+The development scenario selector has no production UI or URL/storage override.
+The existing Google-font build fetch is retained; runtime fonts are self-hosted.
+
 Git ignores common environment files, credentials, local scratch directories,
 dependencies, and generated output. Local exclusions can supplement shared rules.
 

@@ -1,22 +1,31 @@
 # Design
 
-## Current state
+## Implemented foundation
 
-The generated Next.js page, styling, metadata, fonts, and assets remain in place.
-There is no product interface or adopted component library.
+A restrained reading workspace: warm neutral canvas, white source surface, dark
+teal actions, muted amber attention states, small radii, and CSS variable tokens.
+Existing Geist handles interface text; a serif stack distinguishes source prose.
+No UI framework, icon package, decorative dashboard, or branding project.
 
-## Requirements for future UI
+Understand, Compare and Ask & Navigate share document identity and source access.
+Wide desktop has contextual links, analysis, and a persistent source pane. Below
+1280 px the contextual links become a disclosure. Below 1024 px source access uses
+a dialog; mobile comparisons stack original before revised. Light theme only.
 
-- Make source material and the evidence behind explanations easy to inspect.
-- Distinguish extracted facts, AI interpretation, and uncertainty in plain language.
-- Show loading, empty, invalid-input, unsupported-input, and failure states.
-  Never present rejected output as a successful analysis.
-- Use semantic controls, visible focus, keyboard access, readable contrast, and
-  responsive layouts. Preserve document readability on narrow screens and at zoom.
-- Explain what document data leaves the device before external processing occurs.
-- Make any future retention choice explicit; do not promise privacy the system
-  has not technically established.
+Source links identify version and section, focus and highlight a validated passage,
+and provide a return action. The source reader is HTML, with no fabricated PDF
+pages. Document details identify the synthetic nature and location stated in text.
 
-These are acceptance requirements, not verified properties of an implemented
-product. Establish concrete flows before introducing tokens, components, or motion.
-Verify behavior in a browser as described in [Testing](TESTING.md).
+## Accessibility behavior and verification targets
+
+- Semantic landmarks, skip link, headings, labels and visible focus.
+- One tab stop for workspace tabs; Left/Right, Home/End activate immediate content.
+- Native source dialog with Escape dismissal and focus return.
+- Qualifications and change types conveyed in text, not just color.
+- Polite answer/search announcements, explicit input errors, reduced motion.
+- Reflow at 320 px and zoom without page-level horizontal scrolling.
+
+The target is WCAG 2.2 AA behavior; this is not a conformance certification.
+Verify actual keyboard, focus, contrast, browser and responsive behavior following
+[Testing](TESTING.md). Preserve uncertainty, unavailable claims, empty categories,
+unsupported questions and missing-source states as distinct presentations.

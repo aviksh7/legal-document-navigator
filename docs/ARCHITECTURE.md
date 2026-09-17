@@ -2,30 +2,40 @@
 
 ## Current implementation
 
-- Next.js 16.3.3 App Router and React 19.2.8, with routes in `src/app/`.
-- TypeScript strict mode; `@/*` resolves to `src/*`.
-- Tailwind 4 and the generated PostCSS configuration.
-- Next.js Core Web Vitals and TypeScript ESLint presets.
-- A starter page, shared layout, stylesheet, and public starter assets.
-- No document pipeline, application API, AI provider, or persistence layer.
+Next.js 16.3.3 App Router, React 19.2.8, strict TypeScript and Tailwind 4. Preserve
+framework-managed files and read the installed Next.js docs before changing APIs.
 
-Keep `next.config.ts` minimal. Preserve the generated TypeScript plugin and type
-includes. Next.js owns `next-env.d.ts` and `.next/`; generate them, do not commit
-or hand-edit them. Keep the managed AGENTS block and CLAUDE forwarding reference.
+`src/app/page.tsx` and `src/app/workspace/page.tsx` are Server Components. The
+workspace receives serializable authored fixture data and owns client-side tab,
+comparison, answer, source selection, and dialog state. Views use local React
+state and explicit props; no state library or application backend exists.
 
-## Planned boundaries, not implemented
+`src/features/document-workspace/` contains:
 
-Keep rendering and interaction in the app layer. Put deterministic document
-transformations in small TypeScript modules only when needed, separate from
-network calls and UI. Future provider credentials and calls belong on the server;
-client code must not import them.
+- `types.ts`: document/block identities and presentation contracts.
+- `fixtures.ts`: synthetic source documents, statements, prepared comparisons,
+  questions and explicit qualifications.
+- `model.ts`: pure evidence checks, statement presentation gate, fixture integrity,
+  literal search and prepared-question matching.
+- Focused views, evidence presentation, and a shared responsive source reader.
+- Colocated Vitest tests for pure model behavior.
 
-The intended flow is input validation → document representation with stable
-source references → deterministic processing → structured AI response → runtime
-and evidence validation → presentation. This is a design constraint, not an
-existing pipeline or a commitment to specific libraries.
+Document IDs are stable and distinct for each version. Block IDs are scoped to a
+document; their pair is canonical evidence identity. Offsets use JavaScript string
+indices (start inclusive, end exclusive); quoted text must exactly match that
+slice. Document context and version membership are checked before presentation.
+A rejected presentation result excludes the statement text. The UI never repairs
+references by searching for another quote, block or version.
 
-Add directories and interfaces when the first concrete use exists. Avoid generic
-provider frameworks, repositories, event buses, and persistence abstractions.
-Any external processing must first define data disclosure, retention, and failure
-behavior in [Security](SECURITY.md) and [AI system](AI_SYSTEM.md).
+Normal workflows are synchronous fixtures. Development scenarios sit behind
+`NODE_ENV === "development"` branches, with no URL/storage activation mechanism.
+Source content uses one active reader: a desktop aside or native modal dialog.
+
+## Future boundaries, not implemented
+
+Real input → validated document representation → deterministic processing →
+structured AI output → runtime schema and evidence validation → presentation.
+Current types and fixture checks do not constitute a provider schema validator.
+Future provider code and credentials belong on the server. Keep transformations
+separate from provider calls; introduce no generic provider or persistence layers
+without a concrete need.

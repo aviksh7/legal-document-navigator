@@ -10,8 +10,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## Repository map
 
-Current state: Next.js App Router scaffold plus an engineering harness. Product
-UI, document processing, and AI behavior are not implemented.
+Current state: Next.js App Router with a synthetic document workspace and an
+engineering harness. Real document processing and AI are not implemented.
 
 - [README](README.md): setup and commands.
 - [Product](docs/PRODUCT.md): public scope and acceptance goals.

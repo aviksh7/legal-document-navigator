@@ -1,28 +1,34 @@
 # Product
 
-## Current state
+## Implemented: synthetic workspace
 
-The repository contains a Next.js starter page and an engineering harness. It
-does not accept legal documents, produce analysis, or provide legal advice.
+The first product phase helps document readers explore an agreement they might
+sign. It is a fixture demonstration, not live analysis or legal advice.
 
-## Planned purpose
+- `/` introduces an explicitly synthetic employment agreement.
+- `/workspace` opens Understand with an overview, attention items, seven term
+  categories, and suggested questions.
+- Compare adds a prepared revision and shows six selected clause comparisons.
+  The prepared mapping is not computed or claimed to cover all changes.
+- Ask & Navigate offers six prepared questions, limited exact-alias matching,
+  literal text search, and section navigation.
+- All supported statements link to validated source spans. A failed reference
+  withholds the affected statement. Missing information and ambiguity are explicit.
 
-Help people read legal documents with explanations they can check against the
-source. Initial users, supported document formats, jurisdictional scope, and
-the first complete workflow must be agreed before feature implementation.
+The synthetic agreement refers to Bengaluru, India. It is not a legal template,
+does not cover every rule of Indian employment law, and has not been legally
+verified. Neutral, document-specific wording replaces legal risk scores.
 
-Acceptance requirements for future document-derived explanations:
+## Boundaries
 
-- Users can inspect the supporting source for each claim.
-- Deterministic software establishes or validates facts where practical; AI
-  explains meaning within validated constraints.
-- Uncertainty, missing evidence, and unsupported inputs are visible.
-- Invalid output produces a clear failure rather than a plausible unsupported answer.
-- Document handling follows explicit, technically verified retention and logging rules.
+No upload, PDF parser, OCR, AI/API calls, research, auth, database, persistence,
+RAG, semantic comparison, exports, or analytics. Reload resets workspace state.
+There is no chat history or generic chatbot. Future input formats, jurisdictional
+support, processing limits and retention must be decided before real intake.
 
-## Scope boundaries
+## Acceptance
 
-This harness adds no product UI, AI integration, authentication, database, ORM,
-vector storage, or application state framework. Do not imply these capabilities
-exist. Record actual scope decisions in [Decisions](DECISIONS.md) before expanding
-the architecture. [Design](DESIGN.md) covers intended interaction requirements.
+Readers can reach the evidence from every supported explanation, distinguish
+uncertainty from failure, navigate by keyboard, and use the same workflow on
+narrow screens. Verification evidence is documented separately; types or agent
+confidence alone do not establish correctness or accessibility conformance.
