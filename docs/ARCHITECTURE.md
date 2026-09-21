@@ -8,7 +8,7 @@ framework-managed files and read the installed Next.js docs before changing APIs
 `src/app/page.tsx` and `src/app/workspace/page.tsx` are Server Components. The
 workspace receives serializable authored fixture data and owns client-side tab,
 comparison, answer, source selection, and dialog state. Views use local React
-state and explicit props; no state library or application backend exists.
+state and explicit props; no state library is used. Phase 3 adds bounded mock API routes.
 
 `src/features/document-workspace/` contains:
 
@@ -34,8 +34,9 @@ Source content uses one active reader: a desktop aside or native modal dialog.
 ## Browser-local ingestion
 
 `DocumentIntake` is a client island on the server-rendered entry page. Only browser
-event handlers receive a File or pasted text. No server action, route handler,
-fetch, form action or document endpoint receives either. Server output supplies
+event handlers receive a File or pasted text. Intake itself sends neither to a server.
+Only an explicitly confirmed development mock request sends canonical blocks to
+the same-origin AI route; original PDF bytes never leave through this path. Server output supplies
 the app and public sample; the browser requests same-origin code/fonts/worker.
 
 `document-ingestion/processing.ts` owns pure validation, conservative partitioning,
@@ -114,11 +115,24 @@ native worker and clear its global reference. No Blob/object URL is created.
 Browser file reads/GC are not forcibly erasable; worker deadlines do not guarantee
 a hard peak memory cap against decompression or parser allocations.
 
-## Future boundaries, not implemented
+## Mocked Phase 3 boundary
 
-Real input → validated document representation → deterministic processing →
-structured AI output → runtime schema and evidence validation → presentation.
-Current types and fixture checks do not constitute a provider schema validator.
-Future provider code and credentials belong on the server. Keep transformations
-separate from provider calls; introduce no generic provider or persistence layers
-without a concrete need.
+`document-ai/` contains strict Zod contracts, pure provenance/evidence validation,
+versioned prompts, request/response byte bounds, a narrow adapter, an exact-fixture
+mock, bounded handler and browser client, and Understand/Ask presentation. The
+client converts validated evidence IDs into the existing full-block
+SourceReferences. It does not create a fake WorkspaceFixture for provided documents.
+
+`server.ts` is marked server-only. `/api/ai/understand` and `/api/ai/ask` are Node
+POST routes. A development-only configuration enables mocks; production always
+fails closed before body reads. The server passes only an enabled boolean to the
+client. No provider credentials or SDK is present. Mock fixtures are explicitly
+synthetic; arbitrary documents never inherit their authored explanations.
+
+Zod validates unknown requests and model-shaped output, separate from the existing
+typed presentation checks. A whole invalid response is withheld on both server and
+client. Source blocks and metadata remain immutable. No application document or
+result persistence, cache, telemetry, or content logging is added.
+
+See [AI system](AI_SYSTEM.md) for schemas, prompt policy, limits, failures and the
+future HF qualification gate. Semantic comparison and live inference are deferred.

@@ -10,13 +10,15 @@
     "typecheck": "next typegen && tsc --noEmit",
     "check:repo": "node scripts/check-repo.mjs",
     "check": "npm run check:repo && npm run test && npm run lint && npm run typecheck && npm run build",
-    "test": "vitest run"
+    "test": "vitest run",
+    "eval:mock": "vitest run src/features/document-ai/evaluation.test.ts --bail=1"
   },
   "dependencies": {
     "next": "16.3.3",
     "pdfjs-dist": "6.3.289",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "zod": "4.6.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

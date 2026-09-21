@@ -306,3 +306,18 @@ button:disabled { opacity: .45; cursor: not-allowed; }
   .provided-reader .source-section p { font-size: 16px; }
   .intake-actions .button { flex: 1 1 auto; }
 }
+
+.ai-panel { border-top: 1px solid var(--line); padding-top: 24px; margin-top: 24px; overflow-wrap: anywhere; }
+.ai-panel h3 { font-size: 16px; margin-bottom: 12px; }
+.ai-panel > .eyebrow { margin-bottom: 12px; color: var(--attention); }
+.ai-consent { display: flex; align-items: flex-start; gap: 10px; font-size: 12px; line-height: 1.6; margin: 18px 0; }
+.ai-consent input { flex: 0 0 16px; margin-top: 3px; }
+.ai-ask { margin-top: 24px; }
+.ai-result { border-top: 1px solid var(--line); margin-top: 22px; padding-top: 18px; font-size: 13px; }
+.ai-result h4 { font-size: 14px; margin-bottom: 10px; }
+.ai-result h5 { font-size: 13px; margin: 20px 0 10px; }
+.ai-result .statement { margin: 12px 0 18px; }
+.ai-question { margin-top: 10px; }
+.ai-question > button { text-align: left; }
+
+@media (max-width: 767px) { .provided-tools { max-height: none; overflow: visible; } }

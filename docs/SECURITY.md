@@ -3,13 +3,14 @@
 ## Current protections and limits
 
 The app supports browser-local PDF/paste intake and synthetic authored fixtures,
-with no application secrets, external processing, or document storage. Document
-bytes, text, questions, searches and selections stay in browser memory. They are
-not placed in URLs or sent by the application to a
-server, analytics, or logging service. Reload resets the workspace. Browser or
+with no provider credentials, live inference, or document storage. Local extraction,
+reading and search stay in browser memory. An explicitly confirmed development
+mock sends canonical text and one optional question to this app's server. No
+original PDF or filename is sent. Production AI always fails closed before body
+reads. No content is placed in URLs, analytics or application logs. Reload resets the workspace. Browser or
 operating-system behavior is outside this application-level statement.
 
-There is no server document endpoint, server action, analytics, content logging,
+There is no server action, analytics, content logging,
 localStorage, sessionStorage, IndexedDB or cookie use. App code and parser assets
 are served over the network; this is not an offline/no-network claim. Browser
 extensions, devtools, clipboard history, swap, crash recovery, browser form
@@ -61,7 +62,33 @@ No environment template is needed yet; add an exact allowlist exception only whe
 a real template with placeholders is introduced. If a credential is exposed,
 revoke or rotate it; removing a file does not remove it from history.
 
-## Required protections for future features, not implemented
+## Mock AI server protections
+
+The two POST routes require a configured exact same origin and JSON content type,
+reject cross-site fetch metadata and query parameters, cap actual streamed bytes,
+validate strict schemas and provenance, and enforce complete prompt budgets.
+Deadlines include body reads. No automatic retries, repair calls or provider
+fallback exist. Client responses are independently validated and bound to the
+current request/document before display. Plain React text rendering escapes model
+text; no HTML/Markdown execution or model-created links are introduced.
+
+Server errors contain only allowlisted codes, not raw exceptions, schema issues,
+source text, prompts, answers, filenames or secrets. Responses use no-store and
+nosniff. Do not enable hosting/APM body capture or payload traces. App memory is
+transient, not secure erasure; hosting/platform access logs are outside this code.
+The deployment must not add document capture or third-party content telemetry.
+
+`AI_ENABLED` is a kill switch. Mock activation also needs development NODE_ENV,
+`AI_MODE=mock`, and `APP_ORIGIN`. Production stays off even if flags are set.
+One in-flight request and cooldown per browser tab deter accidental repeated use;
+they do not authenticate users or provide distributed rate limiting. No claim of
+an in-memory global serverless spending cap is made. Current mock spend is zero
+because there is no external inference adapter or endpoint in executable code.
+Future HF usage must have only included credits, no payment or overage facility,
+and fail closed on exhausted quota. Optional Vercel WAF must not require paid
+billing; correctness at $0 cannot depend on it.
+
+## Required protections for future live features, not implemented
 
 - Reassess validation and resource limits for each new format or processing path.
 - Keep provider secrets on the server, never in `NEXT_PUBLIC_*` variables.

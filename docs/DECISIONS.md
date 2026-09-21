@@ -1,7 +1,7 @@
 # Engineering decisions
 
 These decisions describe the harness, synthetic workspace and local ingestion.
-AI behavior remains planned, not implemented. Add short dated entries for material
+Live AI remains planned; a development-only mocked boundary is implemented. Add short dated entries for material
 choices; do not maintain a second specification here.
 
 ## 2026-09-15 — Preserve the framework scaffold
@@ -101,3 +101,18 @@ and webpack production extraction were exercised; the normal production build
 remains subject to this host's documented port-binding restriction.
 **Revisit:** supported-browser failure, advisory, or representative fixture requiring
 specific CMap/font assets. See verification notes for actual coverage.
+
+## 2026-09-20 — Mocked Phase 3 before live qualification
+
+**Decision:** implement strict Zod 4.6.5 contracts, same-origin Node routes and
+server/client evidence validation with an exact-synthetic-fixture mock only.
+Production always fails closed. No live inference, secrets or billing configured.
+**Reason:** exercise the trust boundary without spending included credit or
+presenting prepared text as analysis of arbitrary documents. One pinned runtime
+schema dependency generates JSON Schema and validates unknown data.
+**Consequence:** explicit mock disclosure/consent, full-block code-derived quotes,
+stateless Ask, bounded requests/deadlines, zero retries/fallback, safe failures,
+no persistence/logging of content. Local source reading/search remain available.
+**Revisit:** explicit authorization for tiny HF qualification against current
+provider metadata and terms. No live adapter until a candidate passes schema,
+evidence and human semantic review inside the free-credit budget.

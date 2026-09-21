@@ -11,7 +11,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Repository map
 
 Current state: Next.js App Router with a synthetic document workspace, browser-local
-PDF/paste ingestion and an engineering harness. AI is not implemented.
+PDF/paste ingestion and a development-only mocked AI boundary. Live AI is disabled.
 
 - [README](README.md): setup and commands.
 - [Product](docs/PRODUCT.md): public scope and acceptance goals.

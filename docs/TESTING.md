@@ -45,8 +45,8 @@ The Node 24 acceptance suite uses two test-only standard API shims (`toHex` and
 `getOrInsertComputed`) needed by the modern build in that runtime, and restores
 them afterwards. Browser code has no such shims or legacy fallback. Node parser
 acceptance uses PDF.js's Node transport; actual bundled native-worker acceptance
-must also run in a browser. Current total: 115 tests across six files (73 added
-in Phase 2, including the bounded-search regression test).
+must also run in a browser. Phase 2 contributed 73 tests, including the bounded-search regression.
+Phase 3 adds colocated contract, handler, client and mock-evaluation suites.
 
 ## Manual browser acceptance
 
@@ -85,3 +85,29 @@ Inspect the entire diff, untracked files, staged content and final Git status.
 Do not force-add excluded private material. Add browser-testing packages only
 with their first meaningful tests. Future provider and schema tests use mocks;
 live semantic evaluation remains separate from CI.
+
+## Phase 3 mock boundary
+
+`npm run eval:mock` runs the fail-fast synthetic qualification rehearsal. This is
+not a model benchmark: it uses no live provider, network inference or credit.
+The default test suite covers strict schemas, canonical provenance, prompt budgets,
+invalid/cross-document/repeated evidence, whole-response rejection, complete-status
+rules, unknown fixtures, request origin, bounded streams, timeouts, cancellation,
+quota/refusal/incomplete-output errors, no retries, client consent, stale responses,
+shared cooldown and minimal payloads. No raw text is written to evaluation logs.
+
+For browser acceptance run development with `AI_ENABLED=true AI_MODE=mock` and
+`APP_ORIGIN` matching the browser origin. Load each supplied synthetic test document.
+Verify consent gates all requests, labeled Understand/Ask results, exact source
+navigation and return focus, missing schedule/conflicts, unmatched question/source,
+loading/cancel, clear/reload, cooldown, mobile reflow and local search preservation.
+Inspect payloads using synthetic content only. Original PDFs/filenames must never
+enter AI requests; no external inference requests or browser persistence should occur.
+
+Build/start production with the same enable flags deliberately set. Confirm mock
+controls are absent, source reading/search and the authored sample still work,
+and direct POSTs to both AI routes return `ai-unavailable`. URL parameters must
+not enable mock mode. Record actual checks and gaps separately; mock responses
+cannot prove prompt-injection resistance or model quality.
+
+See [Phase 3 verification](PHASE_3_VERIFICATION.md) for the performed mock checks and remaining gaps.

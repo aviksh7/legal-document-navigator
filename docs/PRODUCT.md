@@ -32,9 +32,19 @@ The synthetic agreement refers to Bengaluru, India. It is not a legal template,
 does not cover every rule of Indian employment law, and has not been legally
 verified. Neutral, document-specific wording replaces legal risk scores.
 
+## Implemented: development-only mocked AI
+
+An optional development configuration adds consent and mocked Understand/Ask to
+the provided-document reader. Three clearly synthetic test documents have prepared
+responses with validated source links, missing-information and conflict states.
+Other documents receive no mock analysis. This exercises the server boundary;
+it is not model inference or a quality evaluation of a model. Production AI is
+disabled, and the source reader/sample remain available. No live calls or credit
+are used. See [AI system](AI_SYSTEM.md).
+
 ## Boundaries
 
-No server uploads, OCR, AI/API calls, research, auth, database, persistence, RAG,
+No original PDF uploads, OCR, live AI/provider calls, research, auth, database, persistence, RAG,
 semantic comparison, exports, or analytics. No chat history or generic chatbot.
 Password-required PDFs, forms/XFA, attachments and public copy restrictions are
 unsupported. Image-only PDFs need text/OCR supplied elsewhere. Text extraction
