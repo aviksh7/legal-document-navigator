@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Legal Document Navigator · Review a document",
-  description: "Explore a synthetic document workspace with prepared explanations, source evidence and version comparison.",
+  description: "Read document source text locally, or explore a synthetic workspace with prepared explanations and version comparison.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

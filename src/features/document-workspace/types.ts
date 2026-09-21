@@ -3,17 +3,26 @@ export const categories = [
 ] as const;
 export type Category = (typeof categories)[number];
 
-export interface SourceBlock { id: string; text: string }
-export interface SourceSection { id: string; number: string; title: string; blocks: SourceBlock[] }
+/** Offsets address canonical page/paste text, not PDF bytes or visual positions. */
+export type BlockProvenance =
+  | { kind: "pdf"; pageNumber: number; start: number; end: number }
+  | { kind: "paste"; start: number; end: number };
+export interface PageCoverage { pageNumber: number; characterCount: number; usableCharacters: number }
+export type IngestionMetadata =
+  | { kind: "paste"; pipelineVersion: string; characterCount: number }
+  | { kind: "pdf"; pipelineVersion: string; parserVersion: string; characterCount: number; pages: PageCoverage[] };
+export interface SourceBlock { id: string; text: string; provenance?: BlockProvenance }
+export interface SourceSection { id: string; number: string; title: string; blocks: SourceBlock[]; kind?: "page" | "text" }
 export interface SourceDocument {
   id: string;
-  version: "original" | "revised";
+  version: "original" | "revised" | "provided";
   versionLabel: string;
   title: string;
-  type: string;
-  jurisdiction: string;
-  parties: string[];
+  type: string | null;
+  jurisdiction: string | null;
+  parties: string[] | null;
   sections: SourceSection[];
+  ingestion?: IngestionMetadata;
 }
 
 /** Identity is documentId + blockId. Quote/offsets only validate and display a span. */

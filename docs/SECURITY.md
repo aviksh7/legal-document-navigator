@@ -2,11 +2,37 @@
 
 ## Current protections and limits
 
-The app uses synthetic authored fixtures, with no document intake, application
-secrets, external processing, or storage. Questions, searches and selections stay
-in React memory. They are not placed in URLs or sent by the application to a
+The app supports browser-local PDF/paste intake and synthetic authored fixtures,
+with no application secrets, external processing, or document storage. Document
+bytes, text, questions, searches and selections stay in browser memory. They are
+not placed in URLs or sent by the application to a
 server, analytics, or logging service. Reload resets the workspace. Browser or
 operating-system behavior is outside this application-level statement.
+
+There is no server document endpoint, server action, analytics, content logging,
+localStorage, sessionStorage, IndexedDB or cookie use. App code and parser assets
+are served over the network; this is not an offline/no-network claim. Browser
+extensions, devtools, clipboard history, swap, crash recovery, browser form
+retention and OS behavior cannot be controlled or securely erased by this app.
+Paste disables autocomplete/spellcheck; clear, replacement, page lifecycle and
+unmount release active content state. No PDF Blob/object URLs are created.
+
+PDFs are untrusted. The 10 MiB input cap, sequential pages, text/item/page/block
+caps and abortable 30s job/5s page deadlines reduce abuse. Native worker termination
+keeps cancellation independent of a stalled parser. They cannot guarantee bounded
+peak memory during decompression or eliminate parser vulnerabilities. Exactly
+pinned PDF.js must be reviewed for advisories on upgrade. No document JavaScript,
+HTML, link actions, annotations, images or PDF canvas are executed/rendered. No
+metadata, embedded attachment or parser exception is displayed or logged. The
+filename is only a length-bounded, control-filtered display title, never identity.
+
+Only supported public APIs inform rejection of forms, attachments, copy restrictions,
+and password challenges. No private encryption inspection; documents opening with
+an empty password may be accepted. Text-only extraction can omit material beyond
+these checks; users must inspect the original. Malformed chunks fail closed with
+an allowlisted recovery message. Any replacement/control characters trigger review
+and remain in canonical text. Source text is escaped by React, with whitespace and
+direction handling; document instructions remain data, never application policy.
 
 Only synthetic documents are bundled publicly. Source text is rendered as text,
 not injected HTML. Document/block identity, version, quotes and offsets are
@@ -37,7 +63,7 @@ revoke or rotate it; removing a file does not remove it from history.
 
 ## Required protections for future features, not implemented
 
-- Validate input type, size, and processing limits at trust boundaries.
+- Reassess validation and resource limits for each new format or processing path.
 - Keep provider secrets on the server, never in `NEXT_PUBLIC_*` variables.
 - Avoid unnecessary document retention and logging, including error reporting,
   caches, analytics, and provider payload traces.

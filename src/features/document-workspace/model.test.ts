@@ -144,6 +144,14 @@ describe("prepared questions and literal navigation", () => {
     ]);
     for (const result of results) expect(resolveEvidence([document], result.reference, [document.id]).ok).toBe(true);
   });
+  it("bounds literal search results for large real documents without changing evidence", () => {
+    const document = structuredClone(original);
+    document.sections[0].blocks = [{ id: "many", text: "notice ".repeat(500) }];
+    const results = searchDocument(document, "notice", 101);
+    expect(results).toHaveLength(101);
+    expect(results[100].reference.start).toBe(700);
+    expect(results.every(result => resolveEvidence([document], result.reference, [document.id]).ok)).toBe(true);
+  });
   it("finds repeated literal punctuation without treating it as a zero-length regex", () => {
     const document = structuredClone(original);
     document.sections[0].blocks = [{ id: "punctuation", text: ".*.*" }];

@@ -7,6 +7,12 @@ integrated. Explanations and comparisons are authored synthetic fixture content.
 Typed questions match explicit normalized aliases; no semantic inference occurs.
 Unknown questions produce a clear unsupported state and supported alternatives.
 
+Real PDF/paste intake establishes canonical source blocks deterministically before
+any future interpretation. It never invokes the sample's authored analysis for a
+provided document. Extraction warnings describe possible missing text, not legal
+findings. PDF quotes are exact against canonical PDF.js output; paste quotes use
+the line-ending-normalized input. Neither proves interpretation or completeness.
+
 ## Current evidence gate
 
 Document ID plus block ID identifies evidence. Presentation validates document

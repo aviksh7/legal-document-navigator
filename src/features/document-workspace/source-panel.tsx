@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { resolveEvidence } from "./model";
+import { SourceSections } from "./source-sections";
 import type { OpenSource } from "./evidence";
 import type { SourceDocument, SourceReference } from "./types";
 
@@ -23,11 +24,8 @@ export function SourcePanel({ documents, originalId, selection, narrow, open, on
     <div className="source-toolbar"><label className="sr-only" htmlFor="source-section">Jump to source section</label><select id="source-section" value={resolved?.ok ? resolved.section.id : ""} onChange={(event) => { const section = document.sections.find((s) => s.id === event.target.value); if (!section) return; const block = section.blocks[0]; onOpen({ documentId: document.id, version: document.version, blockId: block.id, start: 0, end: block.text.length, quote: block.text }, event.currentTarget); }}><option value="" disabled>Jump to a section</option>{document.sections.map((section) => <option key={section.id} value={section.id}>{section.number} · {section.title}</option>)}</select></div>
     <div className="source-reader" ref={readerRef} tabIndex={-1} aria-label={`${document.versionLabel} source text`}>
       {resolved && !resolved.ok ? <p className="unavailable-message">Source unavailable. The reference could not be validated.</p> : <>
-        <div className="source-document-intro"><span className="eyebrow">Synthetic document</span><h3>{document.title}</h3><p>{document.parties.join(" & ")}</p></div>
-        {document.sections.map((section) => <section className="source-section" key={section.id}><h3><span>{section.number}</span>{section.title}</h3>{section.blocks.map((block) => {
-          const selected = resolved?.ok && resolved.block.id === block.id;
-          return <p key={block.id} data-block-id={block.id} tabIndex={-1} className={selected ? "selected-passage" : ""}>{selected ? <>{block.text.slice(0, resolved.reference.start)}<mark>{block.text.slice(resolved.reference.start, resolved.reference.end)}</mark>{block.text.slice(resolved.reference.end)}</> : block.text}</p>;
-        })}</section>)}
+        <div className="source-document-intro"><span className="eyebrow">Synthetic document</span><h3>{document.title}</h3><p>{document.parties?.join(" & ")}</p></div>
+        <SourceSections document={document} reference={selection.reference} />
         <p className="source-end">End of synthetic {document.versionLabel.toLowerCase()} · {document.sections.length} sections</p>
       </>}
     </div>

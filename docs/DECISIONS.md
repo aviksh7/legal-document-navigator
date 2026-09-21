@@ -1,7 +1,7 @@
 # Engineering decisions
 
-These decisions describe the harness and synthetic workspace. Real processing and
-AI behavior remain planned, not implemented. Add short dated entries for material
+These decisions describe the harness, synthetic workspace and local ingestion.
+AI behavior remains planned, not implemented. Add short dated entries for material
 choices; do not maintain a second specification here.
 
 ## 2026-09-15 — Preserve the framework scaffold
@@ -74,3 +74,30 @@ with development-only branches; no production route, URL or storage override.
 **Reason:** verify failure layouts without implying live analysis or processing.
 **Consequence:** the normal sample is immediate and has no fake timers.
 **Revisit:** real asynchronous document processing is authorized.
+
+## 2026-09-16 — Deterministic browser-local intake
+
+**Decision:** real PDF/paste input creates the existing SourceDocument with version
+`provided`, fresh session-lifetime UUID, ordered block IDs and explicit provenance.
+Paste only normalizes CR/CRLF; PDF uses public strings plus hasEOL boundaries.
+Physical pages, not inferred headings, organize PDF source. No content hashing.
+**Reason:** traceable evidence must precede interpretation; legal wording must not
+be silently reconstructed. Exact PDF quotes mean canonical extracted text.
+**Consequence:** source-only experience, bounded input/output, quality review, no
+document server endpoint/persistence/AI. Reingestion creates a new identity.
+**Revisit:** a concrete comparison, persistence or deduplication requirement.
+
+## 2026-09-16 — Modern public PDF.js and bundled worker
+
+**Decision:** pin pdfjs-dist 6.3.289, use build/pdf.mjs with matching module worker
+via bundler-resolved URL and supported workerPort/PDFWorker APIs. No private/core
+imports, legacy, CDN, worker copy script or speculative auxiliary asset bundle.
+**Reason:** current major browsers are the target; native worker ownership enables
+bounded lifetimes without a custom worker protocol. Installation audit reported
+zero vulnerabilities. Public APIs cannot identify every encryption/content case.
+**Consequence:** password-required/forms/attachments/restricted PDFs fail safely;
+non-text content is excluded. Empty-password encryption can pass. Turbopack dev
+and webpack production extraction were exercised; the normal production build
+remains subject to this host's documented port-binding restriction.
+**Revisit:** supported-browser failure, advisory, or representative fixture requiring
+specific CMap/font assets. See verification notes for actual coverage.

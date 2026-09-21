@@ -18,6 +18,15 @@ pages. Document details identify the synthetic nature and location stated in tex
 
 ## Accessibility behavior and verification targets
 
+The entry offers PDF, paste and sample paths without implying analysis for real
+documents. The provided source reader has exact-wording search, extraction notes,
+physical page controls and a clear/reset action. It stacks on mobile. Canonical
+text uses pre-wrap without changing stored whitespace. Paste has no page labels.
+Suspicious extraction requires an explicit review action; warnings remain visible
+in the reader. Progress is announced, cancellable and replaceable. Safe errors
+offer another export or paste, with no parser stack trace. Focus moves to the
+source title, review heading or selected evidence, and can return to its trigger.
+
 - Semantic landmarks, skip link, headings, labels and visible focus.
 - One tab stop for workspace tabs; Left/Right, Home/End activate immediate content.
 - Native source dialog with Escape dismissal and focus return.

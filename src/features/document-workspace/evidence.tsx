@@ -6,6 +6,12 @@ export type OpenSource = (reference: SourceReference, trigger: HTMLElement) => v
 export function EvidenceLink({ documents, reference, allowedIds, onOpen }: { documents: SourceDocument[]; reference: SourceReference; allowedIds: string[]; onOpen: OpenSource }) {
   const result = resolveEvidence(documents, reference, allowedIds);
   if (!result.ok) return <span className="unavailable">Source unavailable</span>;
+  if (result.document.version === "provided") {
+    const label = result.block.provenance?.kind === "pdf" ? `PDF page ${result.block.provenance.pageNumber}` : "Pasted text";
+    return <button type="button" className="citation" onClick={(event) => onOpen(reference, event.currentTarget)} aria-label={`Read ${label}, block ${Number(result.block.id.slice(2))}`}>
+      {label} · Block {Number(result.block.id.slice(2))} <span aria-hidden="true">↗</span>
+    </button>;
+  }
   return <button type="button" className="citation" onClick={(event) => onOpen(reference, event.currentTarget)} aria-label={`Read ${result.document.versionLabel}, section ${result.section.number}: ${result.section.title}`}>
     <span aria-hidden="true">§</span> {result.section.number} <span className="citation-version">{result.document.versionLabel}</span> <span aria-hidden="true">↗</span>
   </button>;

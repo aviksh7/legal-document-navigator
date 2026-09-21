@@ -44,19 +44,22 @@ export function matchQuestion(questions: PreparedQuestion[], input: string) {
   return questions.find((q) => [q.question, ...q.aliases].some((alias) => normalizeQuestion(alias) === normalized));
 }
 
-export function searchDocument(document: SourceDocument, input: string) {
+export function searchDocument(document: SourceDocument, input: string, limit = Number.POSITIVE_INFINITY) {
   const query = input.trim();
   if (!query || query.length > 200) return [];
   const pattern = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "giu");
-  return document.sections.flatMap((section) => section.blocks.flatMap((block) => Array.from(block.text.matchAll(pattern), (match) => {
+  const results: { section: SourceDocument["sections"][number]; snippet: string; reference: SourceReference }[] = [];
+  for (const section of document.sections) for (const block of section.blocks) for (const match of block.text.matchAll(pattern)) {
+    if (results.length >= limit) return results;
     const start = match.index;
     const end = start + match[0].length;
-    return {
+    results.push({
       section,
       snippet: `${start > 55 ? "…" : ""}${block.text.slice(Math.max(0, start - 55), Math.min(block.text.length, end + 100))}${end + 100 < block.text.length ? "…" : ""}`,
       reference: { documentId: document.id, blockId: block.id, version: document.version, quote: match[0], start, end } satisfies SourceReference,
-    };
-  })));
+    });
+  }
+  return results;
 }
 
 /** Integrity gate for authored fixtures; this is not a future provider schema validator. */

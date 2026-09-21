@@ -25,7 +25,7 @@
 [hidden] { display: none !important; }
 html { scroll-padding-top: 122px; color-scheme: light; }
 body { margin: 0; background: var(--canvas); color: var(--ink); font-family: var(--font-geist-sans), sans-serif; font-size: 15px; line-height: 1.65; overflow-wrap: anywhere; }
-button, input, select { font: inherit; }
+button, input, select, textarea { font: inherit; }
 button, summary, select { cursor: pointer; }
 button { text-align: left; }
 a { color: inherit; text-decoration: none; }
@@ -266,3 +266,43 @@ form > label, .question-form > label { font-size: 13px; font-weight: 550; displa
   .development-scenarios { padding: 12px 16px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; } }
+
+.document-intake, .provided-workspace { margin-bottom: 36px; border-top: 2px solid var(--accent); background: var(--paper); padding: 30px 34px; }
+.intake-intro { max-width: 590px; }
+.intake-intro > p { margin: 10px 0 22px; color: var(--muted); font-size: 14px; }
+.intake-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.intake-privacy { max-width: 700px; margin-top: 19px; color: var(--muted); font-size: 11px; }
+.paste-form { margin-top: 25px; padding-top: 24px; border-top: 1px solid var(--line); }
+.paste-form textarea { display: block; width: 100%; min-height: 220px; resize: vertical; border: 1px solid var(--control-border); border-radius: var(--radius); padding: 15px; background: var(--canvas); line-height: 1.7; font-family: Georgia, serif; font-size: 16px; }
+.paste-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: 14px; }
+.intake-review { margin-top: 24px; background: var(--attention-bg); border: 1px solid #ddcfb7; padding: 22px; }
+.intake-review > p, .intake-review li { font-size: 13px; margin-top: 9px; }
+.intake-review ul { padding-left: 20px; margin: 14px 0 20px; }
+.provided-heading { display: flex; gap: 20px; align-items: flex-start; justify-content: space-between; }
+.provided-heading .quiet-label { margin-top: 8px; }
+.provided-heading h2 { overflow-wrap: anywhere; }
+.extraction-notes { margin-top: 20px; border-left: 2px solid #c2b184; padding: 8px 14px; font-size: 12px; color: var(--attention); background: var(--attention-bg); }
+.extraction-notes ul { padding-left: 18px; max-height: 250px; overflow-y: auto; }
+.extraction-notes li + li { margin-top: 8px; }
+.provided-grid { display: grid; grid-template-columns: minmax(180px, 0.8fr) minmax(0, 1.5fr); gap: 28px; margin-top: 28px; align-items: start; }
+.provided-tools { min-width: 0; max-height: 75dvh; overflow-y: auto; padding: 4px; }
+.provided-tools .input-row { flex-wrap: wrap; }
+.provided-tools .input-row input { flex-basis: 100%; }
+.provided-paper { min-width: 0; border: 1px solid var(--line); }
+.provided-navigation { padding: 16px 22px; border-bottom: 1px solid var(--line); }
+.provided-navigation > label { display: block; margin-bottom: 7px; font-size: 11px; color: var(--muted); }
+.page-buttons { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 6px; font-size: 11px; color: var(--muted); }
+.provided-reader { padding: 26px; max-height: 75dvh; overflow: auto; scroll-padding: 14px; }
+.source-section .canonical-text { white-space: pre-wrap; tab-size: 4; unicode-bidi: plaintext; margin-bottom: 12px; }
+.source-section .empty-page { font-family: var(--font-geist-sans), sans-serif; color: var(--muted); font-size: 13px; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+.processing-status { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-top: 22px; border-top: 1px solid var(--line); padding-top: 18px; }
+@media (max-width: 767px) {
+  .document-intake, .provided-workspace { padding: 23px 20px; }
+  .provided-grid { grid-template-columns: 1fr; gap: 22px; }
+  .provided-heading { flex-wrap: wrap; gap: 14px; }
+  .provided-tools { max-height: 45dvh; }
+  .provided-reader { padding: 22px; max-height: 70dvh; }
+  .provided-reader .source-section p { font-size: 16px; }
+  .intake-actions .button { flex: 1 1 auto; }
+}

@@ -1,11 +1,24 @@
 # Product
 
-## Implemented: synthetic workspace
+## Implemented: local intake and synthetic workspace
+
+Phase 2 adds **Upload PDF**, **Paste text**, and the retained **Open sample
+agreement** entry. Real intake opens only canonical source text, literal search,
+validated evidence highlights, and physical PDF page navigation. It does not
+generate summaries, legal analysis, comparisons or answers for provided documents.
+Unknown parties, type and jurisdiction remain absent. The version is **Provided
+document**, never an assertion that an arbitrary file is an original.
+
+Extraction happens in this browser without an application document request or
+persistence. Clear/reload resets it. Errors support another file or paste; low
+overall coverage or unusual characters require explicit review. Sparse pages
+retain page-level warnings and empty-page navigation. These are heuristics, not
+confidence or completeness scores, and do not diagnose a scan.
 
 The first product phase helps document readers explore an agreement they might
 sign. It is a fixture demonstration, not live analysis or legal advice.
 
-- `/` introduces an explicitly synthetic employment agreement.
+- `/` offers local intake alongside an explicitly synthetic employment agreement.
 - `/workspace` opens Understand with an overview, attention items, seven term
   categories, and suggested questions.
 - Compare adds a prepared revision and shows six selected clause comparisons.
@@ -21,10 +34,12 @@ verified. Neutral, document-specific wording replaces legal risk scores.
 
 ## Boundaries
 
-No upload, PDF parser, OCR, AI/API calls, research, auth, database, persistence,
-RAG, semantic comparison, exports, or analytics. Reload resets workspace state.
-There is no chat history or generic chatbot. Future input formats, jurisdictional
-support, processing limits and retention must be decided before real intake.
+No server uploads, OCR, AI/API calls, research, auth, database, persistence, RAG,
+semantic comparison, exports, or analytics. No chat history or generic chatbot.
+Password-required PDFs, forms/XFA, attachments and public copy restrictions are
+unsupported. Image-only PDFs need text/OCR supplied elsewhere. Text extraction
+can omit visual/non-text content and reorder wording; consult the original.
+See [Architecture](ARCHITECTURE.md) for exact limits and canonical-text rules.
 
 ## Acceptance
 
